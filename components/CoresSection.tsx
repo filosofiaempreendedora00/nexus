@@ -26,21 +26,14 @@ export function CoresSection() {
           <div className="flex items-center gap-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-accent-mint shadow-[0_0_8px_rgba(123,255,176,0.7)]" />
             <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/60">
-              8 online
+              5 online
             </span>
           </div>
           <span className="mx-1 h-3 w-px bg-white/10" />
           <div className="flex items-center gap-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent-amber" />
+            <span className="h-1.5 w-1.5 rounded-full bg-white/40" />
             <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/60">
-              1 training
-            </span>
-          </div>
-          <span className="mx-1 h-3 w-px bg-white/10" />
-          <div className="flex items-center gap-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent-cyan" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/60">
-              1 calibrating
+              5 reserved
             </span>
           </div>
         </div>

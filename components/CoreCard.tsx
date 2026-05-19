@@ -69,14 +69,26 @@ export function CoreCard({ core, index }: { core: Core; index: number }) {
   const glowBg = useMotionTemplate`radial-gradient(220px circle at ${mouseX}px ${mouseY}px, ${accent.glow}, transparent 70%)`;
 
   return (
-    <motion.div
+    <motion.a
+      href={core.url ?? undefined}
+      target={core.url ? "_blank" : undefined}
+      rel={core.url ? "noopener noreferrer" : undefined}
+      aria-disabled={!core.url}
+      onClick={(e) => {
+        if (!core.url) e.preventDefault();
+      }}
       onMouseMove={(e) => {
         const rect = e.currentTarget.getBoundingClientRect();
         mouseX.set(e.clientX - rect.left);
         mouseY.set(e.clientY - rect.top);
       }}
       style={{ animationDelay: `${200 + index * 60}ms` }}
-      className="enter group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-b from-white/[0.025] to-white/[0.005] p-5 backdrop-blur-xl transition-colors duration-500 hover:border-white/[0.12]"
+      className={cn(
+        "enter group relative block overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-b from-white/[0.025] to-white/[0.005] p-5 backdrop-blur-xl transition-all duration-500",
+        core.url
+          ? "cursor-pointer hover:border-white/[0.12] hover:-translate-y-0.5"
+          : "cursor-default opacity-70"
+      )}
     >
       {/* spotlight on hover */}
       <motion.div
@@ -160,14 +172,20 @@ export function CoreCard({ core, index }: { core: Core; index: number }) {
           <span>v{core.version}</span>
         </div>
 
-        <button className="group/btn flex items-center gap-1 text-[12px] font-medium text-white/70 transition hover:text-white">
-          Acessar
-          <ArrowUpRight
-            className="h-3.5 w-3.5 transition group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5"
-            strokeWidth={2.2}
-          />
-        </button>
+        {core.url ? (
+          <span className="flex items-center gap-1 text-[12px] font-medium text-white/70 transition group-hover:text-white">
+            Acessar
+            <ArrowUpRight
+              className="h-3.5 w-3.5 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              strokeWidth={2.2}
+            />
+          </span>
+        ) : (
+          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/35">
+            reserved
+          </span>
+        )}
       </div>
-    </motion.div>
+    </motion.a>
   );
 }
