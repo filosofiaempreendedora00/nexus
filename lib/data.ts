@@ -162,3 +162,68 @@ export const CORES: Core[] = [
     glyph: "◝",
   },
 ];
+
+
+export type Bundle = {
+    id: string;
+    scope: string;
+    name: string;
+    description: string;
+    status: "active" | "scheduled" | "draft";
+    cores: string[];
+    cycles: number;
+    startDate: string;
+    endDate: string;
+    accent: "violet" | "cyan" | "amber" | "rose";
+};
+
+export const BUNDLES: Bundle[] = [
+  {
+        id: "bundle-01",
+        scope: "Sales",
+        name: "Conversão Acelerada",
+        description: "Stack operacional para maximizar a taxa de conversão do time comercial com IA aplicada ao funil.",
+        status: "active",
+        cores: ["Octopus", "Copiloto", "Epictetus"],
+        cycles: 3,
+        startDate: "Mai 01",
+        endDate: "Jun 30",
+        accent: "cyan",
+  },
+  {
+        id: "bundle-02",
+        scope: "Content",
+        name: "Pipeline UGC",
+        description: "Geração contínua de roteiros calibrados para maximizar ROAS e produtividade do time de UGCs.",
+        status: "active",
+        cores: ["Gerador UGC", "Central de Tech"],
+        cycles: 5,
+        startDate: "Abr 15",
+        endDate: "Jul 15",
+        accent: "violet",
+  },
+  {
+        id: "bundle-03",
+        scope: "Ops",
+        name: "Tech Core",
+        description: "Centralização de todos os produtos da área de Tech em uma única superfície operacional.",
+        status: "scheduled",
+        cores: ["Central de Tech", "Epictetus"],
+        cycles: 2,
+        startDate: "Jun 01",
+        endDate: "Ago 31",
+        accent: "amber",
+  },
+  {
+        id: "bundle-04",
+        scope: "CRM",
+        name: "CRM Transition",
+        description: "Resolução de gargalos do Bitrix e blueprint para o novo CRM proprietário da Turbo.",
+        status: "draft",
+        cores: ["Epictetus"],
+        cycles: 1,
+        startDate: "Jul 01",
+        endDate: "Set 30",
+        accent: "rose",
+  },
+  ];
