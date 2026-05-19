@@ -2,8 +2,10 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight, Sparkles } from "lucide-react";
+import { useIsMobile } from "@/lib/use-is-mobile";
 
 function NexusCore() {
+  const isMobile = useIsMobile();
   return (
     <div className="enter-core relative mx-auto flex h-[280px] w-[280px] items-center justify-center sm:h-[360px] sm:w-[360px]">
       {/* outer rings */}
@@ -30,8 +32,8 @@ function NexusCore() {
         className="absolute h-[68%] w-[68%] rounded-full border border-dashed border-white/[0.05]"
       />
 
-      {/* orbital dots */}
-      {[0, 1, 2, 3, 4].map((i) => {
+      {/* orbital dots — desktop has 5 spinning rings, mobile gets 2 to reduce rAF pressure */}
+      {(isMobile ? [0, 2] : [0, 1, 2, 3, 4]).map((i) => {
         const angle = (i / 5) * Math.PI * 2;
         return (
           <motion.div
@@ -43,6 +45,7 @@ function NexusCore() {
               ease: "linear",
             }}
             className="absolute h-[88%] w-[88%]"
+            style={{ willChange: "transform" }}
           >
             <div
               className="absolute h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_12px_rgba(124,92,255,0.8)]"
@@ -76,30 +79,46 @@ function NexusCore() {
           animate={{ y: [-7, 7, -7] }}
           transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
           className="relative flex items-center justify-center"
+          style={{ willChange: "transform" }}
         >
-          {/* glowing halo trail — sits behind the logo and travels with it */}
-          <motion.div
-            aria-hidden
-            animate={{
-              opacity: [0.55, 0.9, 0.55],
-              scale: [0.92, 1.08, 0.92],
-            }}
-            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-            className="pointer-events-none absolute inset-0 -z-10"
-            style={{
-              background:
-                "radial-gradient(closest-side, rgba(124,92,255,0.55), rgba(94,231,255,0.25) 45%, rgba(6,7,10,0) 75%)",
-              filter: "blur(14px)",
-            }}
-          />
+          {/* glowing halo trail — desktop pulses scale+opacity, mobile keeps it static
+              (scaling a blurred element forces re-rasterization every frame) */}
+          {isMobile ? (
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 -z-10"
+              style={{
+                background:
+                  "radial-gradient(closest-side, rgba(124,92,255,0.55), rgba(94,231,255,0.25) 45%, rgba(6,7,10,0) 75%)",
+                filter: "blur(8px)",
+                opacity: 0.72,
+              }}
+            />
+          ) : (
+            <motion.div
+              aria-hidden
+              animate={{
+                opacity: [0.55, 0.9, 0.55],
+                scale: [0.92, 1.08, 0.92],
+              }}
+              transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+              className="pointer-events-none absolute inset-0 -z-10"
+              style={{
+                background:
+                  "radial-gradient(closest-side, rgba(124,92,255,0.55), rgba(94,231,255,0.25) 45%, rgba(6,7,10,0) 75%)",
+                filter: "blur(14px)",
+              }}
+            />
+          )}
           <img
             src="/turbo-logo.png"
             alt="Turbo Partners"
             draggable={false}
             className="pointer-events-none h-auto w-[78%] max-w-[150px] select-none"
             style={{
-              filter:
-                "drop-shadow(0 0 32px rgba(124,92,255,0.75)) drop-shadow(0 0 18px rgba(94,231,255,0.55)) drop-shadow(0 0 6px rgba(255,255,255,0.55))",
+              filter: isMobile
+                ? "drop-shadow(0 0 12px rgba(124,92,255,0.7)) drop-shadow(0 0 4px rgba(255,255,255,0.4))"
+                : "drop-shadow(0 0 32px rgba(124,92,255,0.75)) drop-shadow(0 0 18px rgba(94,231,255,0.55)) drop-shadow(0 0 6px rgba(255,255,255,0.55))",
             }}
           />
         </motion.div>

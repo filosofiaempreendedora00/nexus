@@ -175,4 +175,20 @@ body {
     opacity: 0;
     animation: coreIn 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
+
+  /* Mobile performance: backdrop-filter is one of the most expensive GPU
+     operations on mobile and forces full-layer recomposition every frame
+     when anything beneath it animates. Strip it on touch devices to keep
+     the floating logo and ambient animations smooth. */
+  @media (max-width: 768px), (pointer: coarse) and (max-width: 1024px) {
+    [class*="backdrop-blur"] {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    .glass {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: rgba(15, 17, 22, 0.7);
+    }
+  }
 }
