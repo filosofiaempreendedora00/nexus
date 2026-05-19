@@ -48,15 +48,15 @@ const config: Config = {
           "50%": { transform: "translate(20px, -20px)" },
         },
         "shimmer": {
-          "0%": { backgroundPosition: "-200% 0" },
-          "100%": { backgroundPosition: "200% 0" },
+          "0%": { backgroundPosition: "150% 0" },
+          "100%": { backgroundPosition: "-150% 0" },
         },
       },
       animation: {
         "pulse-soft": "pulse-soft 2.4s ease-in-out infinite",
         "scan": "scan 6s linear infinite",
         "drift": "drift 12s ease-in-out infinite",
-        "shimmer": "shimmer 3s linear infinite",
+        "shimmer": "shimmer 4.5s linear infinite",
       },
     },
   },
