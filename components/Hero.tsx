@@ -151,7 +151,7 @@ export function Hero() {
           >
             <Sparkles className="h-3 w-3 text-accent-violet" strokeWidth={2.4} />
             <span className="text-[11px] font-medium tracking-wide text-white/70">
-              The Intelligence Core
+              NEXUS: The Intelligence Core
             </span>
             <span className="mx-1 h-3 w-px bg-white/10" />
             <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
