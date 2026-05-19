@@ -84,9 +84,11 @@ export function CoreCard({ core, index }: { core: Core; index: number }) {
       }}
       style={{ animationDelay: `${200 + index * 60}ms` }}
       className={cn(
-        "enter group relative block overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-b from-white/[0.025] to-white/[0.005] p-5 backdrop-blur-xl transition-all duration-500",
+        "enter group relative block overflow-hidden rounded-2xl border border-white/[0.09] p-5 backdrop-blur-xl transition-all duration-500",
+        "bg-gradient-to-b from-white/[0.055] via-white/[0.022] to-white/[0.012]",
+        "shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07),0_1px_2px_0_rgba(0,0,0,0.4),0_8px_24px_-12px_rgba(0,0,0,0.6)]",
         core.url
-          ? "cursor-pointer hover:border-white/[0.12] hover:-translate-y-0.5"
+          ? "cursor-pointer hover:border-white/[0.16] hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.09),0_2px_4px_0_rgba(0,0,0,0.4),0_16px_40px_-16px_rgba(0,0,0,0.7)]"
           : "cursor-default opacity-70"
       )}
     >

@@ -161,21 +161,21 @@ export function Hero() {
             convergem em uma única arquitetura proprietária.
           </p>
 
-          {/* CTAs */}
+          {/* CTA */}
           <div
             className="enter mt-10 flex flex-wrap items-center gap-3"
             style={{ animationDelay: "600ms" }}
           >
-            <button className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-white px-5 py-3 text-[13px] font-medium text-ink-950 transition hover:bg-white/90">
-              <span className="relative z-10">Enter the core</span>
+            <a
+              href="#cores"
+              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-white px-5 py-3 text-[13px] font-medium text-ink-950 transition hover:bg-white/90"
+            >
+              <span className="relative z-10">Explore as inteligências</span>
               <ArrowUpRight
                 className="relative z-10 h-4 w-4 transition group-hover:rotate-45"
                 strokeWidth={2.2}
               />
-            </button>
-            <button className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-5 py-3 text-[13px] font-medium text-white/80 backdrop-blur-md transition hover:border-white/20 hover:bg-white/[0.05]">
-              <span>Explore as inteligências</span>
-            </button>
+            </a>
           </div>
         </div>
 
