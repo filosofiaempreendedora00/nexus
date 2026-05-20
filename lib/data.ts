@@ -13,7 +13,12 @@ export type Core = {
   accent: "violet" | "cyan" | "mint" | "amber" | "rose" | "indigo";
   glyph: string;
   url?: string;
+  area?: string; // ex: "COMERCIAL", "OPERAÇÃO/CREATORS", "TECH"
 };
+
+/** Top-level areas used by the filter row. */
+export const AREAS = ["COMERCIAL", "OPERAÇÃO", "TECH"] as const;
+export type Area = (typeof AREAS)[number];
 
 export const CORES: Core[] = [
   {
@@ -30,6 +35,7 @@ export const CORES: Core[] = [
     accent: "violet",
     glyph: "◐",
     url: "https://ugc-turbo-roberto.onrender.com/",
+    area: "OPERAÇÃO/CREATORS",
   },
   {
     id: "octopus",
@@ -45,6 +51,7 @@ export const CORES: Core[] = [
     accent: "cyan",
     glyph: "◑",
     url: "https://sales-jornada.onrender.com/",
+    area: "COMERCIAL",
   },
   {
     id: "copiloto",
@@ -60,6 +67,7 @@ export const CORES: Core[] = [
     accent: "mint",
     glyph: "◒",
     url: "https://flow-sales-sense.lovable.app/",
+    area: "COMERCIAL",
   },
   {
     id: "tech-hub",
@@ -75,6 +83,7 @@ export const CORES: Core[] = [
     accent: "indigo",
     glyph: "◓",
     url: "https://tech.turbopartners.com.br/",
+    area: "OPERAÇÃO/TECH",
   },
   {
     id: "epictetus",
@@ -90,6 +99,7 @@ export const CORES: Core[] = [
     accent: "amber",
     glyph: "◔",
     url: "https://epictetus.onrender.com/",
+    area: "COMERCIAL",
   },
   {
     id: "meeting-analyzer",
@@ -105,6 +115,7 @@ export const CORES: Core[] = [
     accent: "rose",
     glyph: "◕",
     url: "https://manager-insight-coach.lovable.app/",
+    area: "OPERAÇÃO",
   },
   {
     id: "qbr",
@@ -120,6 +131,7 @@ export const CORES: Core[] = [
     accent: "violet",
     glyph: "◖",
     url: "https://clientes.turbopartners.com.br/qbr/",
+    area: "OPERAÇÃO",
   },
   {
     id: "social-intel",
@@ -135,6 +147,7 @@ export const CORES: Core[] = [
     accent: "cyan",
     glyph: "◗",
     url: "https://turbo-social-sistem.lovable.app/login",
+    area: "OPERAÇÃO/SOCIAL",
   },
   {
     id: "cro-analyzer",
@@ -150,6 +163,7 @@ export const CORES: Core[] = [
     accent: "mint",
     glyph: "◜",
     url: "https://cro-turbo-tech.vercel.app/",
+    area: "TECH",
   },
   {
     id: "xpto-10",

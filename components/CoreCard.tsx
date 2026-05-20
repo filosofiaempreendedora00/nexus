@@ -132,12 +132,23 @@ export function CoreCard({ core, index }: { core: Core; index: number }) {
           </div>
         </div>
 
-        {/* status chip */}
-        <div className="flex items-center gap-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] px-2 py-1 backdrop-blur-md">
-          <span className={cn("h-1.5 w-1.5 rounded-full", statusDots[core.status])} />
-          <span className="text-[10px] font-medium tracking-wide text-white/65">
-            {statusLabels[core.status]}
-          </span>
+        <div className="flex flex-col items-end gap-1.5">
+          {/* status chip */}
+          <div className="flex items-center gap-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] px-2 py-1 backdrop-blur-md">
+            <span className={cn("h-1.5 w-1.5 rounded-full", statusDots[core.status])} />
+            <span className="text-[10px] font-medium tracking-wide text-white/65">
+              {statusLabels[core.status]}
+            </span>
+          </div>
+
+          {/* area tag */}
+          {core.area && (
+            <div className="flex items-center gap-1 rounded-md border border-white/[0.07] bg-white/[0.025] px-1.5 py-0.5">
+              <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/55">
+                {core.area}
+              </span>
+            </div>
+          )}
         </div>
       </div>
 

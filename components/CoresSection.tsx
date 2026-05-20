@@ -1,9 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Search, X } from "lucide-react";
-import { CORES } from "@/lib/data";
+import { Search, X, SlidersHorizontal } from "lucide-react";
+import { CORES, AREAS, type Area } from "@/lib/data";
 import { CoreCard } from "./CoreCard";
+import { cn } from "@/lib/utils";
 
 function normalize(s: string) {
   return s
@@ -13,19 +14,48 @@ function normalize(s: string) {
     .trim();
 }
 
+/** Match a top-level area (COMERCIAL, OPERAÇÃO, TECH) against a core's
+ *  area string. Hierarchical: "OPERAÇÃO" matches "OPERAÇÃO" and any
+ *  "OPERAÇÃO/X". "TECH" matches only "TECH" (not "OPERAÇÃO/TECH"). */
+function coreInArea(coreArea: string | undefined, top: Area) {
+  if (!coreArea) return false;
+  return coreArea === top || coreArea.startsWith(`${top}/`);
+}
+
 export function CoresSection() {
   const [query, setQuery] = useState("");
+  const [active, setActive] = useState<Set<Area>>(new Set());
   const q = normalize(query);
 
   const filtered = useMemo(() => {
-    if (!q) return CORES;
     return CORES.filter((c) => {
-      const haystack = normalize(
-        [c.name, c.codename, c.category, c.description].join(" ")
-      );
-      return haystack.includes(q);
+      // text match
+      if (q) {
+        const haystack = normalize(
+          [c.name, c.codename, c.category, c.description, c.area ?? ""].join(" ")
+        );
+        if (!haystack.includes(q)) return false;
+      }
+      // area match — empty selection = all
+      if (active.size > 0) {
+        const hit = Array.from(active).some((a) => coreInArea(c.area, a));
+        if (!hit) return false;
+      }
+      return true;
     });
-  }, [q]);
+  }, [q, active]);
+
+  const toggleArea = (a: Area) => {
+    setActive((prev) => {
+      const next = new Set(prev);
+      if (next.has(a)) next.delete(a);
+      else next.add(a);
+      return next;
+    });
+  };
+
+  const clearAreas = () => setActive(new Set());
+  const showingAll = active.size === 0;
 
   return (
     <section id="cores" className="relative mx-auto max-w-7xl px-6 py-24">
@@ -64,15 +94,15 @@ export function CoresSection() {
 
       {/* search field */}
       <div
-        className="enter mb-10 max-w-xl"
+        className="enter mb-5 max-w-xl"
         style={{ animationDelay: "120ms" }}
       >
         <label
           className={[
             "group relative flex items-center gap-3 rounded-2xl border px-4 py-3 backdrop-blur-md transition-all duration-300",
-            "border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01]",
-            "shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05),0_1px_2px_0_rgba(0,0,0,0.35)]",
-            "focus-within:border-white/[0.18] focus-within:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_0_0_4px_rgba(124,92,255,0.10),0_8px_28px_-12px_rgba(124,92,255,0.45)]",
+            "border-white/[0.12] bg-gradient-to-b from-white/[0.085] via-white/[0.04] to-white/[0.025]",
+            "shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_2px_4px_0_rgba(0,0,0,0.4),0_8px_24px_-12px_rgba(0,0,0,0.5)]",
+            "focus-within:border-white/[0.22] focus-within:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_0_0_4px_rgba(124,92,255,0.12),0_8px_28px_-12px_rgba(124,92,255,0.45)]",
           ].join(" ")}
         >
           <Search
@@ -103,18 +133,69 @@ export function CoresSection() {
             </span>
           )}
         </label>
+      </div>
 
-        {/* result meta */}
-        <div className="mt-3 flex items-center gap-2 px-1 font-mono text-[10px] uppercase tracking-[0.22em] text-white/35">
-          <span className="h-px w-4 bg-white/15" />
-          <span>
-            {q
-              ? `${filtered.length} ${
-                  filtered.length === 1 ? "match" : "matches"
-                } · "${query.trim()}"`
-              : `${CORES.length} núcleos disponíveis`}
-          </span>
-        </div>
+      {/* area filters */}
+      <div
+        className="enter mb-3 flex flex-wrap items-center gap-2"
+        style={{ animationDelay: "180ms" }}
+      >
+        <span className="flex items-center gap-1.5 pr-1 font-mono text-[10px] uppercase tracking-[0.22em] text-white/35">
+          <SlidersHorizontal className="h-3 w-3" strokeWidth={2.2} />
+          área
+        </span>
+
+        <button
+          type="button"
+          onClick={clearAreas}
+          className={cn(
+            "rounded-full border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] transition-all duration-200",
+            showingAll
+              ? "border-white/[0.18] bg-white/[0.07] text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]"
+              : "border-white/[0.08] bg-white/[0.02] text-white/55 hover:border-white/[0.14] hover:bg-white/[0.04] hover:text-white/80"
+          )}
+        >
+          todas
+        </button>
+
+        {AREAS.map((a) => {
+          const isActive = active.has(a);
+          return (
+            <button
+              key={a}
+              type="button"
+              onClick={() => toggleArea(a)}
+              className={cn(
+                "rounded-full border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] transition-all duration-200",
+                isActive
+                  ? "border-accent-violet/45 bg-accent-violet/[0.12] text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_0_0_3px_rgba(124,92,255,0.10)]"
+                  : "border-white/[0.08] bg-white/[0.02] text-white/55 hover:border-white/[0.14] hover:bg-white/[0.04] hover:text-white/80"
+              )}
+            >
+              {a}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* result meta */}
+      <div className="enter mb-10 flex items-center gap-2 px-1 font-mono text-[10px] uppercase tracking-[0.22em] text-white/35"
+        style={{ animationDelay: "240ms" }}
+      >
+        <span className="h-px w-4 bg-white/15" />
+        <span>
+          {(() => {
+            const parts: string[] = [];
+            parts.push(
+              filtered.length === 1
+                ? "1 núcleo"
+                : `${filtered.length} núcleos`
+            );
+            if (q) parts.push(`busca · "${query.trim()}"`);
+            if (active.size > 0) parts.push(`áreas · ${Array.from(active).join(", ")}`);
+            return parts.join(" · ");
+          })()}
+        </span>
       </div>
 
       {/* grid */}
@@ -124,7 +205,7 @@ export function CoresSection() {
             <CoreCard
               key={core.id}
               core={core}
-              index={Math.min(i, 6) /* keep stagger short on big result-sets */}
+              index={Math.min(i, 6)}
             />
           ))}
         </div>
@@ -139,10 +220,13 @@ export function CoresSection() {
           <p className="mt-1 text-[13px] text-white/40">
             Tente outro termo ou{" "}
             <button
-              onClick={() => setQuery("")}
+              onClick={() => {
+                setQuery("");
+                clearAreas();
+              }}
               className="text-white/70 underline-offset-4 hover:underline"
             >
-              limpar a busca
+              limpar os filtros
             </button>
             .
           </p>
