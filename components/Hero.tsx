@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, Sparkles } from "lucide-react";
 import { useIsMobile } from "@/lib/use-is-mobile";
+import { CoreSpectacle } from "./CoreSpectacle";
 
 function NexusCore() {
   const isMobile = useIsMobile();
@@ -123,6 +124,9 @@ function NexusCore() {
           />
         </motion.div>
       </div>
+
+      {/* fireflies + lightning bursts (desktop) */}
+      <CoreSpectacle />
 
       {/* radial glow */}
       <div

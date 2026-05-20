@@ -14,12 +14,12 @@ function normalize(s: string) {
     .trim();
 }
 
-/** Match a top-level area (COMERCIAL, OPERAÇÃO, TECH) against a core's
- *  area string. Hierarchical: "OPERAÇÃO" matches "OPERAÇÃO" and any
- *  "OPERAÇÃO/X". "TECH" matches only "TECH" (not "OPERAÇÃO/TECH"). */
+/** Match a top-level area chip against a core's area string. The area
+ *  string is treated as a slash-separated list of independent tags, so
+ *  "OPERAÇÃO/TECH" belongs simultaneously to OPERAÇÃO and to TECH. */
 function coreInArea(coreArea: string | undefined, top: Area) {
   if (!coreArea) return false;
-  return coreArea === top || coreArea.startsWith(`${top}/`);
+  return coreArea.split("/").some((seg) => seg.trim() === top);
 }
 
 export function CoresSection() {

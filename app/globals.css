@@ -176,6 +176,32 @@ body {
     animation: coreIn 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
 
+  /* Ambient firefly drift & twinkle — used by CoreSpectacle.
+     --dx / --dy are set inline per element for randomized drift. */
+  @keyframes firefly {
+    0%,
+    100% {
+      opacity: 0;
+      transform: translate3d(0, 0, 0) scale(0.55);
+    }
+    18% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 1;
+      transform: translate3d(var(--dx, 0), var(--dy, 0), 0) scale(1.2);
+    }
+    82% {
+      opacity: 0.35;
+    }
+  }
+  .firefly {
+    animation-name: firefly;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    will-change: transform, opacity;
+  }
+
   /* Mobile performance: backdrop-filter is one of the most expensive GPU
      operations on mobile and forces full-layer recomposition every frame
      when anything beneath it animates. Strip it on touch devices to keep
