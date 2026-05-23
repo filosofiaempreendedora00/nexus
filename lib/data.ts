@@ -50,7 +50,7 @@ export const CORES: Core[] = [
     version: "3.4.0",
     accent: "cyan",
     glyph: "◑",
-    url: "https://sales-jornada.onrender.com/",
+    url: "https://turbo-octopus.onrender.com",
     area: "COMERCIAL",
   },
   {
