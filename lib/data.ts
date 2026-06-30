@@ -166,18 +166,20 @@ export const CORES: Core[] = [
     area: "TECH",
   },
   {
-    id: "xpto-10",
-    name: "XPTO",
+    id: "painel-cross",
+    name: "Painel de Cross",
     codename: "CTX-10",
-    category: "Reserved Slot",
+    category: "Cross-Squad Panel",
     description:
-      "Slot reservado. Próximo núcleo de inteligência aguardando ativação.",
-    status: "standby",
-    load: 2,
-    agents: 0,
-    version: "0.0.1",
+      "Painel unificado de visão cruzada — leitura simultânea de squads, métricas e operações sob uma única superfície.",
+    status: "online",
+    load: 63,
+    agents: 5,
+    version: "1.0.0",
     accent: "indigo",
     glyph: "◝",
+    url: "https://absolut-cross.lovable.app/",
+    area: "COMERCIAL",
   },
 ];
 
